@@ -6,14 +6,25 @@ await pyodide.loadPackage('micropip')
 const micropip = pyodide.pyimport('micropip')
 await micropip.install('sphinx')
 
+/** @type {HTMLInputElement} */
+const in_pkgs = document.querySelector('input#packages')
+/** @type {HTMLTextAreaElement} */
 const ta_conf = document.querySelector('textarea#conf')
+/** @type {HTMLTextAreaElement} */
 const ta_rst = document.querySelector('textarea#rst')
+/** @type {HTMLIFrameElement} */
 const frame_out = document.querySelector('iframe')
 
-function setup() {
+async function setup() {
     ta_conf.addEventListener('input', run)
     ta_rst.addEventListener('input', run)
-    run()
+    await run()
+}
+
+async function sync_pkgs() {
+    return Promise.all(in_pkgs.value.split(/\s+/).map(async (pkg) => {
+        await micropip.install(pkg)
+    }))
 }
 
 /**
@@ -47,7 +58,7 @@ function throttle(f) {
 const run = throttle(async () => {
     pyodide.FS.writeFile('conf.py', ta_conf.value)
     pyodide.FS.writeFile('index.rst', ta_rst.value)
-    await pyodide.loadPackagesFromImports(ta_conf.value)
+    await sync_pkgs()
 
     try {
         await pyodide.runPythonAsync(`
@@ -77,7 +88,7 @@ with patch_docutils(confdir := "."), docutils_namespace():
 `)
     } catch (e) {
         console.error(e)
-        frame_out.srcdoc = html`<pre><label style="color:red">${e.toString()}</label></pre>`
+        frame_out.srcdoc =`<!DOCTYPE html><meta name="color-scheme" content="light dark">${html`<pre><label style="color:red">${e.toString()}</label></pre>`}`
         return
     }
     frame_out.srcdoc = fixLinks(pyodide.FS.readFile('_build/index.html', { encoding: 'utf8' }))
@@ -116,4 +127,4 @@ function readBuildTextFile(path) {
     return pyodide.FS.readFile(`_build${url.pathname}`, { encoding: 'utf8' })
 }
 
-setup()
+await setup()

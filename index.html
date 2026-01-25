@@ -34,19 +34,24 @@ html, body {
         overflow: auto;
     }
 }
+input {
+    flex-basis: content;
+}
 textarea {
     resize: none;
 }
 iframe {
     border: none;
+    background-color: transparent;
 }
 </style>
 </head>
 
 <body>
 <aside>
-    <textarea id=conf placeholder="extensions = […]"></textarea>
-    <textarea id=rst placeholder="Hi!&#10;==="></textarea>
+    <input id=packages type=text pattern="[A-Za-z\-](\s+[A-Za-z\-])*" value=furo>
+    <textarea id=conf>html_theme = "furo"</textarea>
+    <textarea id=rst>Hi!&#10;===</textarea>
 </aside>
 <iframe></iframe>
 </body>
