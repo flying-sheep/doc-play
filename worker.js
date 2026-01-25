@@ -1,5 +1,7 @@
-/** @type {import('pyodide').PyodideAPI} */
-let pyodide
+import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.29.2/full/pyodide.mjs'
+
+//import html from 'escape-html-template-tag'
+
 /** @type {import('pyodide').PyodideAPI["ffi"]["PyProxy"]} */
 let micropip
 
@@ -42,8 +44,6 @@ with patch_docutils(confdir := "."), docutils_namespace():
 
 self.addEventListener("install", (/** @type {ExtendableEvent} */event) => {
     async function load() {
-        html = (await import('escape-html-template-tag')).default
-        const { loadPyodide } = await import('pyodide')
         pyodide = await loadPyodide()
         await pyodide.loadPackage('micropip')
         micropip = pyodide.pyimport('micropip')
