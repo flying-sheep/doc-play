@@ -50,12 +50,33 @@ const run = throttle(async () => {
     await pyodide.loadPackagesFromImports(ta_conf.value)
 
     try {
-        const code = await pyodide.runPythonAsync(`
-from sphinx.cmd.build import main
-main(['-b', 'html', '.', '_build'])
+        await pyodide.runPythonAsync(`
+from sphinx.application import Sphinx
+from sphinx.util.docutils import docutils_namespace, patch_docutils
+from sphinx._cli.util.colour import disable_colour
+
+disable_colour()  # https://github.com/pyodide/pyodide/issues/5535
+with patch_docutils(confdir := "."), docutils_namespace():
+    app = Sphinx(
+        srcdir=".",
+        confdir=confdir,
+        outdir="_build",
+        doctreedir="_build/doctrees",
+        buildername="html",
+        # confoverrides=,
+        # status=,
+        # warning=,
+        freshenv=False,
+        warningiserror=True,
+        # tags=,
+        # verbosity=,
+        # parallel=,
+        exception_on_warning=True,
+    )
+    app.build(force_all=True)
 `)
-        if (code !== 0) { throw new Error(code) }
     } catch (e) {
+        console.error(e)
         frame_out.srcdoc = html`<pre><label style="color:red">${e.toString()}</label></pre>`
         return
     }
