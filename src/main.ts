@@ -3,9 +3,6 @@ import { loadPyodide, version } from 'pyodide'
 import type { PyCallable } from 'pyodide/ffi'
 import _throw from './throw'
 
-const HTML_PREFIX =
-	'<!DOCTYPE html><meta name="color-scheme" content="light dark">'
-
 const pyodide = await loadPyodide({
 	indexURL: `${import.meta.env.BASE_URL}assets/pyodide`,
 	packageBaseUrl: `https://cdn.jsdelivr.net/pyodide/v${version}/full/`,
@@ -23,7 +20,7 @@ const ta_rst =
 const frame_out =
 	document.querySelector<HTMLIFrameElement>('iframe') ?? _throw()
 
-frame_out.srcdoc = HTML_PREFIX
+const HTML_PREFIX = frame_out.srcdoc
 
 async function setup() {
 	ta_conf.addEventListener('input', run)

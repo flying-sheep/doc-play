@@ -1,6 +1,8 @@
 {
 	"scripts": {
-		"start": "vite"
+		"start": "vite",
+		"build": "vite build",
+    "preview": "vite preview"
 	},
 	"packageManager": "pnpm@10.28.2",
 	"dependencies": {
