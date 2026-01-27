@@ -12,7 +12,7 @@ const pyodide = await loadPyodide({
 	packages: ['micropip'],
 })
 const install = pyodide.pyimport('micropip.install') as PyCallable
-await install.callKwargs('sphinx', { verbose: true })
+await install('sphinx')
 
 const in_pkgs =
 	document.querySelector<HTMLInputElement>('input#packages') ?? _throw()
