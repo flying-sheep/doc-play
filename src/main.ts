@@ -1,5 +1,5 @@
 import html from 'escape-html-template-tag'
-import { loadPyodide } from 'pyodide'
+import { loadPyodide, version } from 'pyodide'
 import type { PyCallable } from 'pyodide/ffi'
 import _throw from './throw'
 
@@ -8,6 +8,7 @@ const HTML_PREFIX =
 
 const pyodide = await loadPyodide({
 	indexURL: `${import.meta.env.BASE_URL}assets/pyodide`,
+	packageBaseUrl: `https://cdn.jsdelivr.net/pyodide/v${version}/full/`,
 	packages: ['micropip'],
 })
 const install = pyodide.pyimport('micropip.install') as PyCallable
