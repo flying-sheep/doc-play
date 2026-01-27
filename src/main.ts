@@ -1,6 +1,6 @@
 import html from 'escape-html-template-tag'
 import { loadPyodide } from 'pyodide'
-
+import type { PyCallable } from 'pyodide/ffi'
 import _throw from './throw'
 
 const HTML_PREFIX =
@@ -8,10 +8,10 @@ const HTML_PREFIX =
 
 const pyodide = await loadPyodide({
 	indexURL: `${import.meta.env.BASE_URL}assets/pyodide`,
+	packages: ['micropip'],
 })
-await pyodide.loadPackage('micropip')
-const micropip = pyodide.pyimport('micropip')
-await micropip.install('sphinx')
+const install = pyodide.pyimport('micropip.install') as PyCallable
+await install.callKwargs('sphinx', { verbose: true })
 
 const in_pkgs =
 	document.querySelector<HTMLInputElement>('input#packages') ?? _throw()
@@ -33,7 +33,7 @@ async function setup() {
 async function sync_pkgs() {
 	return Promise.all(
 		in_pkgs.value.split(/\s+/).map(async (pkg) => {
-			await micropip.install(pkg)
+			await install(pkg)
 		}),
 	)
 }

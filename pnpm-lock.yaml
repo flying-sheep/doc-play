@@ -33,9 +33,6 @@ importers:
       vite:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@25.0.10)
-      vite-plugin-pyodide:
-        specifier: ^0.0.15
-        version: 0.0.15(vite@7.3.1(@types/node@25.0.10))
       vite-plugin-static-copy:
         specifier: ^3.1.6
         version: 3.1.6(vite@7.3.1(@types/node@25.0.10))
@@ -850,11 +847,6 @@ packages:
     resolution: {integrity: sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==}
     engines: {'0': node >=0.6.0}
 
-  vite-plugin-pyodide@0.0.15:
-    resolution: {integrity: sha512-NFg77gcM/Ns9AvVNDP2/tf6vqvY7ZvxTSZnT2ja7t9cJ2RBKUg6RNmRZVyS11sVqPmDj0C80rfyM34FokvUdXQ==}
-    peerDependencies:
-      vite: ^5.0.0
-
   vite-plugin-static-copy@3.1.6:
     resolution: {integrity: sha512-dO8Qc71yVCmcrsKrJRgSWmWj9khI7X8fLy8X35/ZFR+Nik8CQ1uUgK7iD2KQc2AQdG51sNegSj8Tb4mDKeNYZA==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -1647,10 +1639,6 @@ snapshots:
       assert-plus: 1.0.0
       core-util-is: 1.0.2
       extsprintf: 1.3.0
-
-  vite-plugin-pyodide@0.0.15(vite@7.3.1(@types/node@25.0.10)):
-    dependencies:
-      vite: 7.3.1(@types/node@25.0.10)
 
   vite-plugin-static-copy@3.1.6(vite@7.3.1(@types/node@25.0.10)):
     dependencies:
