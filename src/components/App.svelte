@@ -3,13 +3,14 @@ import { createToaster } from '@skeletonlabs/skeleton-svelte'
 import build from '../build'
 import { from_search, to_search } from '../url-state'
 import Bar from './Bar.svelte'
+import CodeInput from './CodeInput.svelte'
 import PackageInput from './PackageInput.svelte'
 import Toast from './Toast.svelte'
 
 const DEFAULTS = {
 	pkgs: Object.freeze(['furo']),
-	conf: 'html_theme = "furo"',
-	rst: 'Hi!\n===',
+	conf: 'project = "Sphinx Playground"\nhtml_theme = "furo"\n\n',
+	rst: 'Hi!\n===\n\nReproduce your issue here, then click the :guilabel:`Share` button at the top to copy a link to your reproducer.\n\n',
 }
 
 const toaster = createToaster()
@@ -39,10 +40,10 @@ let preview = $derived(build(conf, rst, pkgs))
 >
     <PackageInput bind:value={pkgs} />
 </Bar>
-<main class="h-screen w-screen flex flex-row">
-    <aside class="basis-full flex flex-col p-1 gap-1">
-        <textarea bind:value={conf} class="input font-mono resize-none basis-full"></textarea>
-        <textarea bind:value={rst} class="input font-mono resize-none basis-full"></textarea>
+<main class="basis-full flex flex-row">
+    <aside class="basis-full flex flex-col p-1 gap-4">
+        <CodeInput title="conf.py" bind:value={conf} class="basis-full" />
+        <CodeInput title="index.rst" bind:value={rst} class="basis-full" />
     </aside>
     {#await preview}
         <div class="basis-full flex items-center justify-center">Building...</div>    
