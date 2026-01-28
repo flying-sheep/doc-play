@@ -6,11 +6,15 @@
 	},
 	"packageManager": "pnpm@10.28.2",
 	"dependencies": {
+		"@skeletonlabs/skeleton": "^4.11.0",
+		"@skeletonlabs/skeleton-svelte": "^4.11.0",
 		"pyodide": "^0.29.2",
-		"svelte": "^5.48.5"
+		"svelte": "^5.48.5",
+		"tailwindcss": "^4.1.18"
 	},
 	"devDependencies": {
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
+		"@tailwindcss/vite": "^4.1.18",
 		"@tsconfig/strictest": "^2.0.8",
 		"@types/emscripten": "^1.41.5",
 		"@types/node": "^25.0.10",
