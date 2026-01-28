@@ -6,6 +6,7 @@ import Bar from './Bar.svelte'
 import CodeInput from './CodeInput.svelte'
 import PackageInput from './PackageInput.svelte'
 import Toast from './Toast.svelte'
+import './App.css'
 
 const DEFAULTS = {
 	pkgs: Object.freeze(['furo']),
