@@ -10,8 +10,7 @@ export default async function build(conf: string, rst: string, pkgs: string[]) {
 	pyodide.FS.writeFile('index.rst', rst)
 	await micropip.install(pkgs)
 
-	try {
-		await pyodide.runPythonAsync(`
+	await pyodide.runPythonAsync(`
 from sphinx.application import Sphinx
 from sphinx.util.docutils import docutils_namespace, patch_docutils
 from sphinx._cli.util.colour import disable_colour
@@ -36,11 +35,6 @@ with patch_docutils(confdir := "."), docutils_namespace():
     )
     app.build(force_all=True)
 `)
-	} catch (e) {
-		console.error(e)
-		// TODO: escape
-		return `${HTML_PREFIX}${`<pre><label style="color:red">${e}</label></pre>`}`
-	}
 	return fixLinks(
 		pyodide.FS.readFile('_build/index.html', { encoding: 'utf8' }),
 	)

@@ -3,7 +3,7 @@ import { Github } from '@lucide/svelte'
 import { AppBar } from '@skeletonlabs/skeleton-svelte'
 import type { Snippet } from 'svelte'
 import { github } from '~build/info'
-import horus_eye from '../horus-eye.svg?raw'
+import HorusEye from '../horus-eye.svg?component'
 
 export interface Props {
 	children?: Snippet
@@ -17,7 +17,7 @@ const { children, onshare, onreset }: Props = $props()
 <AppBar>
 	<AppBar.Toolbar class="grid-cols-[auto_1fr_auto]">
 		<AppBar.Lead>
-			<a title="Sphinx GitHub repo" href="https://github.com/sphinx-doc/sphinx" class="btn-icon btn-icon-lg preset-tonal">{@html horus_eye}</a>
+			<a title="Sphinx GitHub repo" href="https://github.com/sphinx-doc/sphinx" class="btn-icon btn-icon-lg preset-tonal"><HorusEye /></a>
 		</AppBar.Lead>
 		<AppBar.Headline class="flex flex-row gap-4">
 			<p class="text-2xl">Sphinx&nbsp;Playground</p>

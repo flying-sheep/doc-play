@@ -41,7 +41,7 @@ let preview = $derived(build(conf, rst, pkgs))
 >
     <PackageInput bind:value={pkgs} />
 </Bar>
-<main class="basis-full flex flex-row">
+<main class="basis-full min-h-2/3 flex flex-row">
     <aside class="basis-full flex flex-col p-1 gap-4">
         <CodeInput title="conf.py" bind:value={conf} class="basis-full" />
         <CodeInput title="index.rst" bind:value={rst} class="basis-full" />
@@ -50,5 +50,7 @@ let preview = $derived(build(conf, rst, pkgs))
         <div class="basis-full flex items-center justify-center">Building...</div>    
     {:then preview} 
         <iframe srcdoc={preview} title="preview" class="basis-full"></iframe>
+    {:catch error}
+        <pre class="basis-full p-4 overflow-auto preset-tonal-error">{error}</pre>
     {/await}
 </main>
