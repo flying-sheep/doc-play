@@ -6,10 +6,11 @@
 	},
 	"packageManager": "pnpm@10.28.2",
 	"dependencies": {
-		"escape-html-template-tag": "^2.2.3",
-		"pyodide": "^0.29.2"
+		"pyodide": "^0.29.2",
+		"svelte": "^5.48.5"
 	},
 	"devDependencies": {
+		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@tsconfig/strictest": "^2.0.8",
 		"@types/emscripten": "^1.41.5",
 		"@types/node": "^25.0.10",

@@ -2,6 +2,7 @@
 
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
 import { defineConfig } from 'vite'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
@@ -22,5 +23,5 @@ export function viteStaticCopyPyodide() {
 export default defineConfig({
 	appType: 'mpa', // no router, give 404s when files don’t exist
 	optimizeDeps: { exclude: ['pyodide'] },
-	plugins: [viteStaticCopyPyodide()],
+	plugins: [viteStaticCopyPyodide(), svelte()],
 })

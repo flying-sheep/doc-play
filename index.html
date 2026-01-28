@@ -1,50 +1,11 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>doc preview</title>
 <script type=module src=src/main.ts></script>
-<style>
-html, body {
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
-    padding: 0;
-}
-:is(body, aside) {
-    display: flex;
-    flex-direction: row;
-    &:is(aside) {
-        flex-direction: column;
-    }
-    & > * {
-        flex: 0 1 50%;
-        padding: 1ex;
-        overflow: auto;
-    }
-}
-input {
-    flex-basis: content;
-}
-textarea {
-    resize: none;
-}
-iframe {
-    border: none;
-    background-color: transparent;
-}
-</style>
 </head>
-
-<body>
-<aside>
-    <input id=packages type=text pattern="[A-Za-z\-](\s+[A-Za-z\-])*" value=furo>
-    <textarea id=conf>html_theme = "furo"</textarea>
-    <textarea id=rst>Hi!&#10;===</textarea>
-</aside>
-<iframe srcdoc='&lt;!DOCTYPE html>&lt;head>&lt;meta name="color-scheme" content="light dark">&lt;/head>'></iframe>
-</body>
+<body></body>
 </html>
