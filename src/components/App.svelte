@@ -1,5 +1,5 @@
 <script lang="ts">
-import build from './build'
+import build from '../build'
 import PackageInput from './PackageInput.svelte'
 
 let pkgs = $state(['furo'])
@@ -14,5 +14,9 @@ let preview = $derived(build(conf, rst, pkgs))
         <textarea bind:value={conf} class="input font-mono resize-none basis-full"></textarea>
         <textarea bind:value={rst} class="input font-mono resize-none basis-full"></textarea>
     </aside>
-    <iframe srcdoc={await preview} title="preview" class="basis-full"></iframe>
+    {#await preview}
+        <div class="basis-full flex items-center justify-center">Building...</div>    
+    {:then preview} 
+        <iframe srcdoc={preview} title="preview" class="basis-full"></iframe>
+    {/await}
 </main>
