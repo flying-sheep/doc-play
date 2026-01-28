@@ -6,6 +6,7 @@
 	},
 	"packageManager": "pnpm@10.28.2",
 	"dependencies": {
+		"@lucide/svelte": "^0.563.1",
 		"@skeletonlabs/skeleton": "^4.11.0",
 		"@skeletonlabs/skeleton-svelte": "^4.11.0",
 		"pyodide": "^0.29.2",
@@ -21,6 +22,7 @@
 		"biome": "^0.3.3",
 		"typescript": "^5.9.3",
 		"vite": "^7.3.1",
+		"vite-plugin-info": "^0.4.1",
 		"vite-plugin-static-copy": "^3.1.6"
 	}
 }

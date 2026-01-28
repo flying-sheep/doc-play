@@ -1,6 +1,8 @@
 <script lang="ts">
+import { Github } from '@lucide/svelte'
 import { AppBar } from '@skeletonlabs/skeleton-svelte'
 import type { Snippet } from 'svelte'
+import { github } from '~build/info'
 
 export interface Props {
 	children?: Snippet
@@ -21,6 +23,9 @@ const { children, onshare, onreset }: Props = $props()
             {@render children?.()}
 			<button type="button" class="btn preset-filled" onclick={onshare}>Share</button>
 			<button type="button" class="btn preset-tonal" onclick={onreset}>Reset</button>
+			{#if github}
+			<a href={github} class="btn-icon btn-icon-lg preset-tonal"><Github /></a>
+			{/if}
 		</AppBar.Trail>
 	</AppBar.Toolbar>
 </AppBar>
