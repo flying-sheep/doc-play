@@ -1,0 +1,54 @@
+name: Deployment
+
+permissions:
+    contents: write
+    pages: write
+    id-token: write
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+  workflow_dispatch:
+
+concurrency: deployment-${{ github.ref }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: corepack enable
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build --base=/${{ github.event.pull_request.base.repo.name }}/pr-${{ github.event.pull_request.number }}/
+        if: github.event_name == 'pull_request'
+        env:
+          NODE_ENV: development
+      - run: pnpm build --base=/${{ github.event.repository.name }}/
+        if: github.event_name != 'pull_request'
+        env:
+          NODE_ENV: production
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+  # TODO: add PR preview
+  deploy-production:
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
