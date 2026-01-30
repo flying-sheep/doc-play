@@ -1,6 +1,5 @@
 <script lang="ts">
 import { createToaster } from '@skeletonlabs/skeleton-svelte'
-import build from '../build'
 import { from_search, to_search } from '../url-state'
 import Bar from './Bar.svelte'
 import CodeInput from './CodeInput.svelte'
@@ -14,6 +13,11 @@ const DEFAULTS = {
 	rst: 'Hi!\n===\n\nReproduce your issue here, then click the :guilabel:`Share` button at the top to copy a link to your reproducer.\n\n',
 }
 
+const worker = new Worker(new URL('../worker/index.ts', import.meta.url), {
+	name: 'rst builder',
+	type: 'module',
+})
+
 const toaster = createToaster()
 
 const url_state = from_search(location.search)
@@ -22,7 +26,15 @@ const url_state = from_search(location.search)
 let pkgs = $state(url_state.pkgs ?? [...DEFAULTS.pkgs])
 let conf = $state(url_state.conf ?? DEFAULTS.conf)
 let rst = $state(url_state.rst ?? DEFAULTS.rst)
-let preview = $derived(build(conf, rst, pkgs))
+
+let preview: string | Error | null = $state(null)
+worker.addEventListener(
+	'message',
+	async (event: MessageEvent<string | Error>) => {
+		preview = event.data
+	},
+)
+$effect(() => worker.postMessage($state.snapshot({ pkgs, conf, rst })))
 </script>
 
 <Toast {toaster} />
@@ -46,11 +58,11 @@ let preview = $derived(build(conf, rst, pkgs))
         <CodeInput title="conf.py" bind:value={conf} class="basis-full" />
         <CodeInput title="index.rst" bind:value={rst} class="basis-full" />
     </aside>
-    {#await preview}
+    {#if preview === null}
         <div class="basis-full flex items-center justify-center">Building...</div>    
-    {:then preview} 
+    {:else if typeof preview === 'string'} 
         <iframe srcdoc={preview} title="preview" class="basis-full"></iframe>
-    {:catch error}
-        <pre class="basis-full p-4 overflow-auto preset-tonal-error">{error}</pre>
-    {/await}
+    {:else if preview instanceof Error}
+        <pre class="basis-full p-4 overflow-auto preset-tonal-error">{preview}</pre>
+    {/if}
 </main>

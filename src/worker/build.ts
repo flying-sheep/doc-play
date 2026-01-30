@@ -2,9 +2,6 @@ import { micropip, pyodide } from './pyodide'
 
 await micropip.install('sphinx')
 
-const HTML_PREFIX =
-	'<!DOCTYPE html><head><meta name="color-scheme" content="light dark"></head>'
-
 export default async function build(conf: string, rst: string, pkgs: string[]) {
 	pyodide.FS.writeFile('conf.py', conf)
 	pyodide.FS.writeFile('index.rst', rst)
