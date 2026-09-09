@@ -9,7 +9,7 @@ import { defineConfig } from 'vite'
 import info from 'vite-plugin-info'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
-const PYODIDE_EXCLUDE = ['!**/*.{md,html}', '!**/*.d.ts', '!**/node_modules']
+const PYODIDE_EXCLUDE = ['!**/*.{md,html}', '!**/*.d.ts']
 
 export function pyodide() {
 	const pyodideDir = dirname(fileURLToPath(import.meta.resolve('pyodide')))
@@ -18,6 +18,7 @@ export function pyodide() {
 			{
 				src: [join(pyodideDir, '*'), ...PYODIDE_EXCLUDE],
 				dest: 'assets/pyodide',
+				rename: { stripBase: true },
 			},
 		],
 	})
