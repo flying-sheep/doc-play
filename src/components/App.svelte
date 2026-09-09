@@ -39,7 +39,7 @@ let preview = $derived(build(conf, rst, pkgs))
         rst = DEFAULTS.rst
     }}
 >
-    <PackageInput bind:value={pkgs} />
+    <PackageInput bind:value={pkgs} class="self-stretch" />
 </Bar>
 <main class="basis-full min-h-2/3 flex flex-row">
     <aside class="basis-full flex flex-col p-1 gap-4">

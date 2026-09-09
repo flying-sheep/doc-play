@@ -8,12 +8,12 @@ let { value = $bindable([]), ...rest }: TagsInputRootProps = $props()
 </script>
 
 <TagsInput value={value} onValueChange={(d) => value = d.value} {...rest}>
-    <TagsInput.Control>
+    <TagsInput.Control class="py-1.5 flex-auto items-center">
         <TagsInput.Context>
             {#snippet children(tagsInput)}
                 {#each tagsInput().value as value, index (index)}
                     <TagsInput.Item {value} {index}>
-                        <TagsInput.ItemPreview>
+                        <TagsInput.ItemPreview class="btn-xs">
                             <TagsInput.ItemText>{value}</TagsInput.ItemText>
                             <TagsInput.ItemDeleteTrigger />
                         </TagsInput.ItemPreview>
