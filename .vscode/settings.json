@@ -1,5 +1,5 @@
 {
-	"[json][jsonc][css][javascript][typescript][svelte]": {
+	"[json][jsonc][css][javascript][typescript][svelte][yaml]": {
 		"editor.formatOnSave": true,
 		"editor.defaultFormatter": "biomejs.biome",
 		"editor.codeActionsOnSave": {
